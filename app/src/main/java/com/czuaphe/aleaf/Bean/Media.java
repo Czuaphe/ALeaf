@@ -5,4 +5,10 @@ package com.czuaphe.aleaf.Bean;
  */
 
 public class Media {
+
+    private String path;
+
+    private String mimeType;
+
+
 }

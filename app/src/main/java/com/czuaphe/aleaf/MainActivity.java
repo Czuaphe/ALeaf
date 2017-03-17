@@ -47,8 +47,10 @@ public class MainActivity extends AppCompatActivity {
             //data = getAlbums(this);
         }
 
-        /*
+
         // 使用工具类 PermissionUtis 获取读外置存储的权限
+        // TODO 工具类 PermissionUtils 无法使用，尽快解决
+        /*
         if (PermissionUtils.checkPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
 
             data = getAlbums(this);    // 得到权限就加载数据
