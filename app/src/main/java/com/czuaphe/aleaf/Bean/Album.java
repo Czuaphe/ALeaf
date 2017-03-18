@@ -19,6 +19,12 @@ public class Album {
         medias = new ArrayList<>();
     }
 
+    public Album(String title, int id, ArrayList<Media> medias) {
+        this.title = title;
+        this.id = id;
+        this.medias = medias;
+    }
+
     public int getId() {
         return id;
     }

@@ -47,8 +47,14 @@ public class MainActivity extends BaseActivity {
         ArrayList<Album> albums = getAlbumManager().getAlbums();
 
         for (int i = 0; i < albums.size(); i ++) {
-            Log.d(TAG, "onCreate: " + albums.get(i).getTitle());
-            Log.d(TAG, "onCreate: " + albums.get(i).getId());
+
+            for(int j = 0; j < albums.get(i).getMedias().size(); j ++) {
+                Log.d(TAG, "onCreate: " + albums.get(i).getTitle() + albums.get(i).getMedias().get(j).getPath());
+                Log.d(TAG, "onCreate: " + albums.get(i).getTitle() + albums.get(i).getMedias().get(j).getMimeType());
+                Log.d(TAG, "onCreate: " + albums.get(i).getTitle() + albums.get(i).getMedias().get(j).getSize());
+                Log.d(TAG, "onCreate: " + albums.get(i).getTitle() + albums.get(i).getMedias().get(j).getDateModified());
+                Log.d(TAG, "onCreate: " + albums.get(i).getTitle() + albums.get(i).getMedias().get(j).getOrientation());
+            }
         }
 
         AlbumAdapter albumAdapter = new AlbumAdapter(albums);
@@ -79,32 +85,6 @@ public class MainActivity extends BaseActivity {
         //测试中
         //getThumbnails(this);
 
-
-    }
-
-
-    public ArrayList<String> getAlbumsData() {
-
-        // 使用工具类 PermissionUtis 获取读外置存储的权限
-        if (PermissionUtils.checkPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-
-
-            return getAlbums(this);
-
-
-        } else {
-
-            // 请求权限
-            PermissionUtils.requestPermissions(MainActivity.this, 1, Manifest.permission.READ_EXTERNAL_STORAGE);
-            return defaultAlbum();
-        }
-
-    }
-
-    public ArrayList<String> defaultAlbum() {
-        ArrayList<String> data = new ArrayList<>();
-        data.add("empty!!");
-        return data;
 
     }
 

@@ -19,7 +19,7 @@ public class AlbumManager {
     }
 
     public void loadAlbums(Context context) {
-        albums = MediaStoreProvider.getAlbums(context, 1);
+        albums = MediaStoreProvider.getAlbums(context);
     }
 
     public ArrayList<Album> getAlbums() {
