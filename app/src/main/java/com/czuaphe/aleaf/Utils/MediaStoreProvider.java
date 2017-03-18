@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import com.czuaphe.aleaf.Bean.Album;
 import com.czuaphe.aleaf.Bean.Media;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
  */
 
 public class MediaStoreProvider {
+
+    private static final String TAG = "MediaStoreProvider";
 
 
     public static ArrayList<Album> getAlbums(Context context) {
@@ -46,7 +49,6 @@ public class MediaStoreProvider {
 
 
         String[] projection = new String[]{
-                // NOTE: don't change the order!
                 MediaStore.Images.Media.DATA,
                 MediaStore.Images.Media.DATE_TAKEN,
                 MediaStore.Images.Media.MIME_TYPE,
@@ -90,5 +92,36 @@ public class MediaStoreProvider {
         return mediasList;
 
     }
+
+    // TODO: 2017/3/18 get Album Thumbnails
+    public ArrayList<String> getThumbnails(Context context) {
+        ArrayList<String> list = new ArrayList<>();
+
+        String[] projection = new String[] { MediaStore.Images.Thumbnails.IMAGE_ID, MediaStore.Images.Thumbnails.KIND, MediaStore.Images.Thumbnails.DATA};
+        String selection = null;
+        Cursor cur = context.getContentResolver().query(MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI, projection, null, null, null);
+
+        if(cur != null && cur.moveToFirst()) {
+
+            do {
+
+                String tn_ImageId = cur.getString(cur.getColumnIndex(MediaStore.Images.Thumbnails.IMAGE_ID));
+                int tn_Kind = cur.getInt(cur.getColumnIndex(MediaStore.Images.Thumbnails.KIND));
+                String tn_Data = cur.getString(cur.getColumnIndex(MediaStore.Images.Thumbnails.DATA));
+
+                Log.d(TAG, "getThumbnails: ImageId: " + tn_ImageId);
+                Log.d(TAG, "getThumbnails: Kind: " + tn_Kind);
+                Log.d(TAG, "getThumbnails: Data: " + tn_Data);
+
+            } while (cur.moveToNext());
+
+            cur.close();
+
+        }
+
+        return list;
+
+    }
+
 
 }

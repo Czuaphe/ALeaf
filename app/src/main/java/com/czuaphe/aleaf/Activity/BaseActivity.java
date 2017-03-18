@@ -1,8 +1,9 @@
-package com.czuaphe.aleaf;
+package com.czuaphe.aleaf.Activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.czuaphe.aleaf.MyApplication;
 import com.czuaphe.aleaf.Utils.AlbumManager;
 
 /**

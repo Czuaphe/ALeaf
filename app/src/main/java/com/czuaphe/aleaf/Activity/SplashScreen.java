@@ -1,17 +1,17 @@
-package com.czuaphe.aleaf;
+package com.czuaphe.aleaf.Activity;
 
 import android.Manifest;
-import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import static com.czuaphe.aleaf.Utils.MediaStoreProvider.getAlbums;
+import com.czuaphe.aleaf.Activity.BaseActivity;
+import com.czuaphe.aleaf.Activity.MainActivity;
+import com.czuaphe.aleaf.R;
 
 /**
  * Created by admin on 2017/3/18.

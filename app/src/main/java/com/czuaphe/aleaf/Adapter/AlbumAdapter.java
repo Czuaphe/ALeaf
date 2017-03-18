@@ -21,6 +21,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
 
     private ArrayList<Album> albums;
 
+    private View.OnClickListener onClickListener;
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         // ImageView imageView;
         TextView title;
@@ -30,7 +32,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
             super(view);
 
             title = (TextView) view.findViewById(R.id.album_name);
-            id = (TextView) view.findViewById(R.id.album_id);
+            id = (TextView) view.findViewById(R.id.album_count);
         }
 
     }
@@ -42,7 +44,12 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int p) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.album_item, parent, false);
+
+        view.setOnClickListener(onClickListener);
+
         return new ViewHolder(view);
+
+
     }
 
     @Override
@@ -54,7 +61,18 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         Album album = albums.get(position);
         holder.title.setText(album.getTitle());
-        holder.id.setText(String.valueOf(album.getId()));
+        holder.id.setText(String.valueOf(album.getMedias().size()));
+        holder.title.setTag(album);
+
+    }
+
+    public void setOnClickListener(View.OnClickListener lis) {
+        onClickListener = lis;
+    }
+
+    public void DataSetChanged(ArrayList<Album> albums) {
+        this.albums = albums;
+        notifyDataSetChanged();
     }
 
 }
