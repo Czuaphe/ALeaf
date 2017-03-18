@@ -93,7 +93,7 @@ public class MediaStoreProvider {
 
     }
 
-    // TODO: 2017/3/18 get Album Thumbnails
+    // TODO: 2017/3/18 will get Album Thumbnails
     public ArrayList<String> getThumbnails(Context context) {
         ArrayList<String> list = new ArrayList<>();
 
