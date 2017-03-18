@@ -10,11 +10,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.czuaphe.aleaf.Adapter.AlbumAdapter;
+import com.czuaphe.aleaf.Bean.Album;
 import com.czuaphe.aleaf.Utils.MediaStoreProvider;
 import com.czuaphe.aleaf.Utils.PermissionUtils;
 
@@ -22,58 +26,91 @@ import java.io.File;
 import java.io.LineNumberInputStream;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+import static com.czuaphe.aleaf.Utils.MediaStoreProvider.getAlbums;
+
+public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
-    private ListView list;
+    private RecyclerView rvAlbums;
 
-    private static ArrayList<String> data = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        rvAlbums = (RecyclerView) findViewById(R.id.rv_album);
+        LinearLayoutManager layout = new LinearLayoutManager(this);
+        rvAlbums.setLayoutManager(layout);
+
+
+        ArrayList<Album> albums = getAlbumManager().getAlbums();
+
+        for (int i = 0; i < albums.size(); i ++) {
+            Log.d(TAG, "onCreate: " + albums.get(i).getTitle());
+            Log.d(TAG, "onCreate: " + albums.get(i).getId());
+        }
+
+        AlbumAdapter albumAdapter = new AlbumAdapter(albums);
+        rvAlbums.setAdapter(albumAdapter);
+
+
 
         // 使用本地方法 获取读外置存储的权限
-
+        /*
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
 
         } else {
 
-            data = MediaStoreProvider.getAlbums(this);
-            //data = getAlbums(this);
-        }
-
-
-        // 使用工具类 PermissionUtis 获取读外置存储的权限
-        // TODO 工具类 PermissionUtils 无法使用，尽快解决
-        /*
-        if (PermissionUtils.checkPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-
-            data = getAlbums(this);    // 得到权限就加载数据
-        } else {
-
-            // 请求权限
-            PermissionUtils.requestPermissions(MainActivity.class, 1, Manifest.permission.READ_EXTERNAL_STORAGE);
+            data = getAlbums(this);
         }
         */
 
 
-        list = (ListView) findViewById(R.id.listView);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, data);
-        list.setAdapter(adapter);
+        ;
+
+
+        //list = (ListView) findViewById(R.id.listView);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, getAlbumsData());
+        //list.setAdapter(adapter);
 
         //测试中
-        getThumbnails(this);
+        //getThumbnails(this);
 
 
     }
 
 
+    public ArrayList<String> getAlbumsData() {
 
+        // 使用工具类 PermissionUtis 获取读外置存储的权限
+        if (PermissionUtils.checkPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+
+            return getAlbums(this);
+
+
+        } else {
+
+            // 请求权限
+            PermissionUtils.requestPermissions(MainActivity.this, 1, Manifest.permission.READ_EXTERNAL_STORAGE);
+            return defaultAlbum();
+        }
+
+    }
+
+    public ArrayList<String> defaultAlbum() {
+        ArrayList<String> data = new ArrayList<>();
+        data.add("empty!!");
+        return data;
+
+    }
+
+
+
+    /*
     public static ArrayList<String> getAlbums(Context context) {
 
         ArrayList<String> dataList = new ArrayList<>();
@@ -94,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return dataList;
     }
+    */
 
     public ArrayList<String> getThumbnails(Context context) {
         ArrayList<String> list = new ArrayList<>();
@@ -122,20 +160,6 @@ public class MainActivity extends AppCompatActivity {
 
         return list;
 
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,@NonNull int[] grantResults) {
-        switch (requestCode) {
-            case 1:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    data = getAlbums(this);
-                } else {
-                    Toast.makeText(this, "You are denied the permission!", Toast.LENGTH_SHORT).show();
-
-                }
-        }
     }
 
 
