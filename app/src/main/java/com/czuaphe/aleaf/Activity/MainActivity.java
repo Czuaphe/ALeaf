@@ -78,7 +78,7 @@ public class MainActivity extends BaseActivity {
         // setting Albums
         StaggeredGridLayoutManager albumLayout = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         //LinearLayoutManager albumLayout = new LinearLayoutManager(this);
-        albumAdapter = new AlbumAdapter(getAlbumManager().getAlbums());
+        albumAdapter = new AlbumAdapter(this, getAlbumManager().getAlbums());
         albumAdapter.setOnClickListener(albumClickListener);
         rvAlbums.setLayoutManager(albumLayout);
         rvAlbums.setAdapter(albumAdapter);

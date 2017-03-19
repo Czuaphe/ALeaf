@@ -1,5 +1,6 @@
 package com.czuaphe.aleaf.Adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.czuaphe.aleaf.Bean.Album;
 import com.czuaphe.aleaf.R;
 
@@ -20,24 +22,26 @@ import java.util.ArrayList;
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
 
     private ArrayList<Album> albums;
+    private Context context;
 
     private View.OnClickListener onClickListener;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        // ImageView imageView;
+        ImageView preview;
         TextView title;
         TextView id;
 
         ViewHolder(View view) {
             super(view);
-
+            preview = (ImageView) view.findViewById(R.id.album_preview);
             title = (TextView) view.findViewById(R.id.album_name);
             id = (TextView) view.findViewById(R.id.album_count);
         }
 
     }
 
-    public AlbumAdapter(ArrayList<Album> data) {
+    public AlbumAdapter(Context context, ArrayList<Album> data) {
+        this.context = context;
         albums = data;
     }
 
@@ -63,6 +67,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
         holder.title.setText(album.getTitle());
         holder.id.setText(String.valueOf(album.getMedias().size()));
         holder.title.setTag(album);
+
+        Glide.with(context).load(album.getMedias().get(0).getPath())
+             .into(holder.preview);
 
     }
 
