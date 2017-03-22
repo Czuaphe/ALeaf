@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
@@ -56,7 +57,7 @@ public class MainActivity extends BaseActivity {
 
 
 
-
+        /* 测试getAlbumManager()中的方法
         ArrayList<Album> albums = getAlbumManager().getAlbums();
 
         for (int i = 0; i < albums.size(); i ++) {
@@ -69,14 +70,16 @@ public class MainActivity extends BaseActivity {
                 Log.d(TAG, "onCreate: " + albums.get(i).getTitle() + albums.get(i).getMedias().get(j).getOrientation());
             }
         }
+        */
 
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         rvAlbums = (RecyclerView) findViewById(R.id.rv_album);
         rvMedias = (RecyclerView) findViewById(R.id.rv_media);
 
         // setting Albums
-        StaggeredGridLayoutManager albumLayout = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager albumLayout = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         //LinearLayoutManager albumLayout = new LinearLayoutManager(this);
         albumAdapter = new AlbumAdapter(this, getAlbumManager().getAlbums());
         albumAdapter.setOnClickListener(albumClickListener);
@@ -84,9 +87,9 @@ public class MainActivity extends BaseActivity {
         rvAlbums.setAdapter(albumAdapter);
 
         // setting Medias
-        LinearLayoutManager mediaLayout = new LinearLayoutManager(this);
-
-        mediaAdapter = new MediaAdapter();
+        //LinearLayoutManager mediaLayout = new LinearLayoutManager(this);
+        StaggeredGridLayoutManager mediaLayout = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        mediaAdapter = new MediaAdapter(this);
         rvMedias.setLayoutManager(mediaLayout);
         rvMedias.setAdapter(mediaAdapter);
 

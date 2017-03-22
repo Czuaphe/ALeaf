@@ -17,9 +17,9 @@
         <ImageView
             android:id="@+id/album_preview"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop"
-            />
+            android:layout_height="200dp"
+            android:scaleType="centerCrop" />
+
         <!--
         <com.mikepenz.iconics.view.IconicsImageView
             android:id="@+id/selected_icon"

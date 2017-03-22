@@ -4,7 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/media_preview"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
+
     <TextView
+        android:maxLines="1"
+        android:ellipsize="end"
         android:id="@+id/media_path"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
