@@ -1,51 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp"
+    app:cardCornerRadius="1dp"
+    app:cardElevation="5dp" >
 
+    <LinearLayout
 
-    <RelativeLayout
-        android:id="@+id/header_album_card"
-        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
 
-        <ImageView
-            android:id="@+id/album_preview"
+        <RelativeLayout
+            android:id="@+id/header_album_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/album_preview"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop" />
+
+            <!--
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:id="@+id/selected_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:elevation="10dp"
+                android:visibility="gone"
+                app:iiv_color="@color/md_white_1000"
+                app:iiv_icon="gmd-check"
+                tools:targetApi="lollipop" />
+            -->
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/album_name"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop" />
+            android:layout_height="wrap_content" />
 
-        <!--
-        <com.mikepenz.iconics.view.IconicsImageView
-            android:id="@+id/selected_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:elevation="10dp"
-            android:visibility="gone"
-            app:iiv_color="@color/md_white_1000"
-            app:iiv_icon="gmd-check"
-            tools:targetApi="lollipop" />
-        -->
+        <TextView
+            android:id="@+id/album_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
-    <TextView
-        android:id="@+id/album_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/album_count"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-</LinearLayout>
+</android.support.v7.widget.CardView>
