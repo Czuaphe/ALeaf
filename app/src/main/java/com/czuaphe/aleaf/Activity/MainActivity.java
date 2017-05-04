@@ -1,6 +1,7 @@
 package com.czuaphe.aleaf.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.provider.MediaStore;
 import android.os.Bundle;
@@ -29,6 +30,8 @@ public class MainActivity extends BaseActivity {
     private RecyclerView rvMedias;
     private MediaAdapter mediaAdapter;
 
+    private int albumNum = 0;
+    private int mediaNum = 0;
 
 
     private boolean albumMode = true;
@@ -37,14 +40,26 @@ public class MainActivity extends BaseActivity {
     private View.OnClickListener albumClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Album album = (Album) v.findViewById(R.id.album_name).getTag();
-
+            Log.d(TAG, "onClick: started");
+            albumNum = (int) v.findViewById(R.id.album_name).getTag();
+            Album album = getAlbumManager().getAlbums().get(albumNum);
             albumMode = false;
             toggleRecyclerVisibility();
             mediaAdapter.DataSetChanged(album.getMedias());
+            Log.d(TAG, "onClick: finished");
         }
     };
 
+    private View.OnClickListener mediaClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mediaNum = (int) v.findViewById(R.id.media_path).getTag();
+            Intent intent = new Intent(MainActivity.this, ShowMediaActivity.class);
+            intent.putExtra("albumId", albumNum);
+            intent.putExtra("mediaId", mediaNum);
+            startActivity(intent);
+        }
+    };
 
 
     @Override
@@ -79,8 +94,8 @@ public class MainActivity extends BaseActivity {
         rvMedias = (RecyclerView) findViewById(R.id.rv_media);
 
         // setting Albums
-        StaggeredGridLayoutManager albumLayout = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        //LinearLayoutManager albumLayout = new LinearLayoutManager(this);
+        //StaggeredGridLayoutManager albumLayout = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        LinearLayoutManager albumLayout = new LinearLayoutManager(this);
         albumAdapter = new AlbumAdapter(this, getAlbumManager().getAlbums());
         albumAdapter.setOnClickListener(albumClickListener);
         rvAlbums.setLayoutManager(albumLayout);
@@ -90,13 +105,14 @@ public class MainActivity extends BaseActivity {
         //LinearLayoutManager mediaLayout = new LinearLayoutManager(this);
         StaggeredGridLayoutManager mediaLayout = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         mediaAdapter = new MediaAdapter(this);
+        mediaAdapter.setOnClickListener(mediaClickListener);
         rvMedias.setLayoutManager(mediaLayout);
         rvMedias.setAdapter(mediaAdapter);
 
 
         toggleRecyclerVisibility();
 
-
+        Log.d(TAG, "onCreate: finished");
 
         // 使用本地方法 获取读外置存储的权限
         /*

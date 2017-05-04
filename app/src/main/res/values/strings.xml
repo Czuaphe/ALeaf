@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ALeaf</string>
+    <string name="title_activity_show_media">ShowMediaActivity</string>
 </resources>

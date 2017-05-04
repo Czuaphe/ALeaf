@@ -66,7 +66,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
         Album album = albums.get(position);
         holder.title.setText(album.getTitle());
         holder.id.setText(String.valueOf(album.getMedias().size()));
-        holder.title.setTag(album);
+        holder.title.setTag(position);
 
         Glide.with(context).load(album.getMedias().get(0).getPath())
              .into(holder.preview);
