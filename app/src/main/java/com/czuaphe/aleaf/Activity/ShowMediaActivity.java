@@ -1,9 +1,12 @@
 package com.czuaphe.aleaf.Activity;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.icu.util.Measure;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
@@ -21,8 +24,9 @@ import java.util.List;
 
 public class ShowMediaActivity extends BaseActivity implements View.OnClickListener {
 
-    private ImageView imageView;
+//    private ImageView imageView;
     private ViewPager viewPager;
+    private Toolbar toolbar;
 
     private ShowMediaPagerAdapter adapter;
 
@@ -92,13 +96,19 @@ public class ShowMediaActivity extends BaseActivity implements View.OnClickListe
 
 //        Glide.with(this).load(list.get(albumId).getMedias().get(mediaId).getPath()).into(imageView);
 
-        hideSystemUI();
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.bringToFront();
+
+        toggleSystemUI();
 
     }
 
     public void hideSystemUI() {
         runOnUiThread(new Runnable() {
             public void run() {
+                toolbar.animate().translationY(-toolbar.getHeight()).setInterpolator(new AccelerateInterpolator())
+                        .setDuration(200).start();
                 getWindow().getDecorView().setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -116,7 +126,8 @@ public class ShowMediaActivity extends BaseActivity implements View.OnClickListe
     public void showSystemUI() {
         runOnUiThread(new Runnable() {
             public void run() {
-
+                toolbar.animate().translationY(getStatusBarHeight(getResources())).setInterpolator(new DecelerateInterpolator())
+                        .setDuration(240).start();
                 getWindow().getDecorView().setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -137,6 +148,14 @@ public class ShowMediaActivity extends BaseActivity implements View.OnClickListe
         }else {
             hideSystemUI();
         }
+    }
+
+    public static int getStatusBarHeight(Resources r) {
+        int resourceId = r.getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0)
+            return r.getDimensionPixelSize(resourceId);
+
+        return 0;
     }
 
 }
