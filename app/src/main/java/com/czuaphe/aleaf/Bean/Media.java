@@ -1,10 +1,12 @@
 package com.czuaphe.aleaf.Bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Czuaphe on 2017/3/17.
  */
 
-public class Media {
+public class Media implements Serializable {
 
     private String path = null;   // MediaStore.Files.FileColumns.DATA(String) ：文件的路径
 
