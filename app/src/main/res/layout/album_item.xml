@@ -4,9 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="3dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="1dp"
     app:cardCornerRadius="1dp"
-    app:cardElevation="5dp" >
+    app:cardElevation="5dp">
 
     <LinearLayout
 
@@ -24,10 +25,10 @@
             <ImageView
                 android:id="@+id/album_preview"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 android:scaleType="centerCrop" />
 
-            <!--
+
             <com.mikepenz.iconics.view.IconicsImageView
                 android:id="@+id/selected_icon"
                 android:layout_width="40dp"
@@ -37,10 +38,10 @@
                 android:layout_gravity="center"
                 android:elevation="10dp"
                 android:visibility="gone"
-                app:iiv_color="@color/md_white_1000"
+                app:iiv_color="#FFFFFF"
                 app:iiv_icon="gmd-check"
                 tools:targetApi="lollipop" />
-            -->
+
 
         </RelativeLayout>
 

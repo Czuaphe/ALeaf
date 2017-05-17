@@ -54,9 +54,6 @@ public class Media implements Serializable {
         this.orientation = orientation;
     }
 
-
-
-
     public String getPath() {
         return path;
     }

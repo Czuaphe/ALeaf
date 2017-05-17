@@ -11,6 +11,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.czuaphe.aleaf.Activity.BaseActivity;
 import com.czuaphe.aleaf.Adapter.AlbumAdapter;
@@ -35,18 +36,37 @@ public class MainActivity extends BaseActivity {
 
 
     private boolean albumMode = true;
-
+    private boolean editMode = false;
 
     private View.OnClickListener albumClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Log.d(TAG, "onClick: started");
-            albumNum = (int) v.findViewById(R.id.album_name).getTag();
-            Album album = getAlbumManager().getAlbums().get(albumNum);
-            albumMode = false;
-            toggleRecyclerVisibility();
-            mediaAdapter.DataSetChanged(album.getMedias());
-            Log.d(TAG, "onClick: finished");
+            if(editMode) {
+                int id = (int) v.findViewById(R.id.album_name).getTag();
+                albumAdapter.notifyItemChanged(getAlbumManager().toggleAlbumSelected(id));
+                // 如果selectedAlbum的大小为0，则退出editMode模式，并刷新菜单
+                if(getAlbumManager().selectedAlbumCount() == 0) {
+                    editMode = false;
+                }
+            } else {
+                albumNum = (int) v.findViewById(R.id.album_name).getTag();
+                Album album = getAlbumManager().getAlbums().get(albumNum);
+                albumMode = false;
+                toggleRecyclerVisibility();
+                mediaAdapter.DataSetChanged(album.getMedias());
+            }
+        }
+    };
+
+    private View.OnLongClickListener albumLongClickListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            // 长按发现时，将对应的Album的数据修改就行，Adapter只负责显示控件
+            int id = (int) v.findViewById(R.id.album_name).getTag();
+            albumAdapter.notifyItemChanged(getAlbumManager().toggleAlbumSelected(id));
+            //Log.d(TAG, "onLongClick:" + getAlbumManager().getAlbums().get(id).getTitle());
+            editMode = true;
+            return true;
         }
     };
 
@@ -94,10 +114,11 @@ public class MainActivity extends BaseActivity {
         rvMedias = (RecyclerView) findViewById(R.id.rv_media);
 
         // setting Albums
-        //StaggeredGridLayoutManager albumLayout = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        LinearLayoutManager albumLayout = new LinearLayoutManager(this);
+        StaggeredGridLayoutManager albumLayout = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        //LinearLayoutManager albumLayout = new LinearLayoutManager(this);
         albumAdapter = new AlbumAdapter(this, getAlbumManager().getAlbums());
         albumAdapter.setOnClickListener(albumClickListener);
+        albumAdapter.setOnLongClickListener(albumLongClickListener);
         rvAlbums.setLayoutManager(albumLayout);
         rvAlbums.setAdapter(albumAdapter);
 

@@ -12,12 +12,13 @@ public class Album {
 
     private String title;  // MediaStore.Image.Media.BUCKET_DISPLAY_NAME
 
-    private ArrayList<Media> medias;
+    private ArrayList<Media> medias = new ArrayList<>();
 
-    public Album() {
+    private boolean selected = false;
 
-        medias = new ArrayList<>();
-    }
+    private ArrayList<Media> selectedMedias = new ArrayList<>();
+
+    public Album() {}
 
     public Album(String title, int id, ArrayList<Media> medias) {
         this.title = title;
@@ -48,4 +49,21 @@ public class Album {
     public void setMedias(ArrayList<Media> medias) {
         this.medias = medias;
     }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    public ArrayList<Media> getSelectedMedias() {
+        return selectedMedias;
+    }
+
+    public void setSelectedMedias(ArrayList<Media> selectedMedias) {
+        this.selectedMedias = selectedMedias;
+    }
+
 }

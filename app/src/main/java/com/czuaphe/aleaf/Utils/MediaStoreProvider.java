@@ -10,6 +10,7 @@ import com.czuaphe.aleaf.Bean.Album;
 import com.czuaphe.aleaf.Bean.Media;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Czuaphe on 2017/3/17.
