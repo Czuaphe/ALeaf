@@ -31,10 +31,6 @@ public class MainActivity extends BaseActivity {
     private RecyclerView rvMedias;
     private MediaAdapter mediaAdapter;
 
-    private int albumNum = 0;
-    private int mediaNum = 0;
-
-
     private boolean albumMode = true;
     private boolean editMode = false;
 
@@ -49,8 +45,9 @@ public class MainActivity extends BaseActivity {
                     editMode = false;
                 }
             } else {
-                albumNum = (int) v.findViewById(R.id.album_name).getTag();
+                int albumNum = (int) v.findViewById(R.id.album_name).getTag();
                 Album album = getAlbumManager().getAlbums().get(albumNum);
+                getAlbumManager().setCurrentAlbum(album);
                 albumMode = false;
                 toggleRecyclerVisibility();
                 mediaAdapter.DataSetChanged(album.getMedias());
@@ -73,11 +70,29 @@ public class MainActivity extends BaseActivity {
     private View.OnClickListener mediaClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            mediaNum = (int) v.findViewById(R.id.media_path).getTag();
-            Intent intent = new Intent(MainActivity.this, ShowMediaActivity.class);
-            intent.putExtra("albumId", albumNum);
-            intent.putExtra("mediaId", mediaNum);
-            startActivity(intent);
+            if(editMode) {
+                int id = (int) v.findViewById(R.id.media_path).getTag();
+                mediaAdapter.notifyItemChanged(getAlbumManager().getCurrentAlbum().toggleMediaSelected(id));
+                // 如果selectedMedias的大小为0，则退出editMode模式，并刷新菜单
+                if(getAlbumManager().getCurrentAlbum().getSelectedMedias().size() == 0) {
+                    editMode = false;
+                }
+            } else {
+                int mediaNum = (int) v.findViewById(R.id.media_path).getTag();
+                Intent intent = new Intent(MainActivity.this, ShowMediaActivity.class);
+                intent.putExtra("mediaId", mediaNum);
+                startActivity(intent);
+            }
+        }
+    };
+
+    private View.OnLongClickListener mediaLongClickListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            int id = (int) v.findViewById(R.id.media_path).getTag();
+            mediaAdapter.notifyItemChanged(getAlbumManager().getCurrentAlbum().toggleMediaSelected(id));
+            editMode = true;
+            return true;
         }
     };
 
@@ -127,6 +142,7 @@ public class MainActivity extends BaseActivity {
         StaggeredGridLayoutManager mediaLayout = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         mediaAdapter = new MediaAdapter(this);
         mediaAdapter.setOnClickListener(mediaClickListener);
+        mediaAdapter.setOnLongClickListener(mediaLongClickListener);
         rvMedias.setLayoutManager(mediaLayout);
         rvMedias.setAdapter(mediaAdapter);
 

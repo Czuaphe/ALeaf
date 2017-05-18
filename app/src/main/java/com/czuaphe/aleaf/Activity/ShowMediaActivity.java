@@ -79,14 +79,12 @@ public class ShowMediaActivity extends BaseActivity implements View.OnClickListe
 
 //        imageView = (ImageView) findViewById(R.id.show_image);
 //        imageView.setOnClickListener(this);
-        List<Album> list = getAlbumManager().getAlbums();
 
         Intent intent = getIntent();
-        int albumId = intent.getIntExtra("albumId", 0);
         int mediaId = intent.getIntExtra("mediaId", 0);
 
 // start here
-        List<Media> mediaList = list.get(albumId).getMedias();
+        List<Media> mediaList = getAlbumManager().getCurrentAlbum().getMedias();
 
         adapter = new ShowMediaPagerAdapter(getSupportFragmentManager(), mediaList);
         viewPager = (ViewPager) findViewById(R.id.show_image);

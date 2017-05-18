@@ -86,7 +86,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
         } else {
             holder.preview.clearColorFilter();
             holder.selectedIcon.setVisibility(View.GONE);
-            holder.layout.setPadding(0, 0, 0, 0);
+            //holder.layout.setPadding(0, 0, 0, 0);
         }
 
 

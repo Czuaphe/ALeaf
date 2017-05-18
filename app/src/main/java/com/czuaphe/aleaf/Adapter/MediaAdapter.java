@@ -1,6 +1,7 @@
 package com.czuaphe.aleaf.Adapter;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,15 +26,18 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
     private Context context;
 
     private View.OnClickListener onClickListener;
+    private View.OnLongClickListener onLongClickListener;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView preview;
         TextView path;
+        ImageView selectedIcon;
 
         ViewHolder(View view) {
             super(view);
             preview = (ImageView) view.findViewById(R.id.media_preview);
             path = (TextView)view.findViewById(R.id.media_path);
+            selectedIcon = (ImageView) view.findViewById(R.id.selected_icon);
         }
 
     }
@@ -52,6 +56,7 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
     public MediaAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int p) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.media_item, parent, false);
         view.setOnClickListener(onClickListener);
+        view.setOnLongClickListener(onLongClickListener);
         return new MediaAdapter.ViewHolder(view);
     }
 
@@ -69,11 +74,25 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
         holder.path.setVisibility(View.GONE);
         Glide.with(context).load(media.getPath()).into(holder.preview);
 
+        if(media.isSelected()) {
+            holder.preview.setColorFilter(0x88000000, PorterDuff.Mode.SRC_ATOP);
+            holder.selectedIcon.setVisibility(View.VISIBLE);
+            //holder.layout.setPadding(15, 0, 15, 0);
+        } else {
+            holder.preview.clearColorFilter();
+            holder.selectedIcon.setVisibility(View.GONE);
+            //holder.layout.setPadding(0, 0, 0, 0);
+        }
+
 
     }
 
     public void setOnClickListener(View.OnClickListener lis) {
         onClickListener = lis;
+    }
+
+    public void setOnLongClickListener(View.OnLongClickListener lis) {
+        onLongClickListener = lis;
     }
 
     public void DataSetChanged(ArrayList<Media> medias) {

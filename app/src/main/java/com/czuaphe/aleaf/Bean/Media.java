@@ -9,18 +9,14 @@ import java.io.Serializable;
 public class Media implements Serializable {
 
     private String path = null;   // MediaStore.Files.FileColumns.DATA(String) ：文件的路径
-
     private long dateModified = 0;
-
     private long size = 0;
-
     private int orientation = 0;
-
     private String mimeType = null;   // MediaStore.Files.FileColumns.MIME_TYPE：文件的后缀类型
 
-    public Media() {
+    private boolean selected = false;
 
-    }
+    public Media() {}
 
     public Media(String path, String mimeType, long size, long dateModified, int orientation) {
         this.path = path;
@@ -68,5 +64,13 @@ public class Media implements Serializable {
 
     public void setMimeType(String mimeType) {
         this.mimeType = mimeType;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

@@ -66,4 +66,17 @@ public class Album {
         this.selectedMedias = selectedMedias;
     }
 
+    public int toggleMediaSelected(int id) {
+        Media media = medias.get(id);
+        media.setSelected(!media.isSelected());
+
+
+        if(media.isSelected()) {
+            selectedMedias.add(media);
+        } else {
+            selectedMedias.remove(media);
+        }
+        return id;
+    }
+
 }
