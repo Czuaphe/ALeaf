@@ -18,6 +18,7 @@ public class AlbumManager {
 
     private ArrayList<Album> albums;
 
+    private  int currentAlbumNum = 0;
     private Album currentAlbum;
 
     private ArrayList<Album> selectedAlbums;
@@ -29,12 +30,15 @@ public class AlbumManager {
     }
 
     public void loadAlbums(Context context) {
+        selectedAlbums = new ArrayList<>();
+        currentAlbum = new Album();
         albums = MediaStoreProvider.getAlbums(context);
     }
 
     public ArrayList<Album> getAlbums() {
         return albums;
     }
+
 
     public int selectedAlbumCount() {
         return selectedAlbums.size();
@@ -56,6 +60,15 @@ public class AlbumManager {
 
         return id;
     }
+
+    public int getCurrentAlbumNum() {
+        return currentAlbumNum;
+    }
+
+    public void setCurrentAlbumNum(int currentAlbumNum) {
+        this.currentAlbumNum = currentAlbumNum;
+    }
+
 
     public void setCurrentAlbum(Album album) {
         currentAlbum = album;

@@ -1,13 +1,14 @@
 package com.czuaphe.aleaf.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -32,8 +33,10 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
         View layout;
         ImageView preview;
         ImageView selectedIcon;
+        LinearLayout message;
         TextView title;
-        TextView id;
+        TextView number;
+        TextView word;
 
         ViewHolder(View view) {
             super(view);
@@ -41,7 +44,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
             preview = (ImageView) view.findViewById(R.id.album_preview);
             title = (TextView) view.findViewById(R.id.album_name);
             selectedIcon = (ImageView) view.findViewById(R.id.selected_icon);
-            id = (TextView) view.findViewById(R.id.album_count);
+            number = (TextView) view.findViewById(R.id.album_count);
+            message = (LinearLayout) view.findViewById(R.id.album_message);
+            word = (TextView) view.findViewById(R.id.album_word);
         }
 
     }
@@ -72,7 +77,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         Album album = albums.get(position);
         holder.title.setText(album.getTitle());
-        holder.id.setText(String.valueOf(album.getMedias().size()));
+        holder.number.setText(String.valueOf(album.getMedias().size()));
         holder.title.setTag(position);
 
         Glide.with(context).load(album.getMedias().get(0).getPath())
@@ -80,13 +85,19 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
 
 
         if(album.isSelected()) {
+            // 如果相册被选中，显示半透明背景和选中的图标
             holder.preview.setColorFilter(0x88000000, PorterDuff.Mode.SRC_ATOP);
             holder.selectedIcon.setVisibility(View.VISIBLE);
-            //holder.layout.setPadding(15, 0, 15, 0);
+            // 如果相册被选中，将文字背景变色
+            holder.message.setBackgroundColor(context.getResources().getColor(R.color.colorPrimaryDark));
+            holder.title.setTextColor(Color.WHITE);
+            holder.word.setTextColor(Color.WHITE);
         } else {
             holder.preview.clearColorFilter();
             holder.selectedIcon.setVisibility(View.GONE);
-            //holder.layout.setPadding(0, 0, 0, 0);
+            holder.message.setBackgroundColor(Color.WHITE);
+            holder.title.setTextColor(Color.BLACK);
+            holder.word.setTextColor(Color.GRAY);
         }
 
 

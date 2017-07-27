@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">ALeaf</string>
     <string name="title_activity_show_media">ShowMediaActivity</string>
+    <string name="menu_main_activity_action_search">search</string>
+    <string name="menu_main_activity_search">Setting</string>
+    <string name="layout_album_item_medias">Medias</string>
 </resources>

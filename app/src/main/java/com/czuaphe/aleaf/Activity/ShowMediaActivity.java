@@ -2,6 +2,7 @@ package com.czuaphe.aleaf.Activity;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.icu.util.Measure;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,8 @@ import com.czuaphe.aleaf.Adapter.ShowMediaPagerAdapter;
 import com.czuaphe.aleaf.Bean.Album;
 import com.czuaphe.aleaf.Bean.Media;
 import com.czuaphe.aleaf.R;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
 
 import java.util.List;
 
@@ -96,6 +99,8 @@ public class ShowMediaActivity extends BaseActivity implements View.OnClickListe
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(new IconicsDrawable(this).icon(GoogleMaterial.Icon.gmd_menu).sizeDp(18).color(Color.WHITE));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         toolbar.bringToFront();
 
         toggleSystemUI();

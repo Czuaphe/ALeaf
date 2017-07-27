@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    <!--<item android:id="@+id/action_search"
+        android:title="@string/menu_main_activity_action_search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />-->
+    <item android:id="@+id/action_search"
+        android:title="@string/menu_main_activity_action_search"
+        app:showAsAction="ifRoom" />
+    <item android:id="@+id/action_sort"
+        android:title="Sort"
+        app:showAsAction="ifRoom">
+        <menu xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            tools:context=".PhotosActivity">
+            <group android:checkableBehavior="single">
+                <item android:id="@+id/name_action_sort"
+                    android:title="Name"
+                    android:checked="true"
+                    app:showAsAction="never"/>
+                <item android:id="@+id/date_action_sort"
+                    android:title="Date"
+                    app:showAsAction="never"/>
+            </group>
+        </menu>
+    </item>
+    <item android:id="@+id/setting"
+        android:title="@string/menu_main_activity_search"
+        app:showAsAction="never"/>
+</menu>

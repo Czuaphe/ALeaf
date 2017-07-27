@@ -12,11 +12,11 @@ public class Album {
 
     private String title;  // MediaStore.Image.Media.BUCKET_DISPLAY_NAME
 
-    private ArrayList<Media> medias = new ArrayList<>();
+    private ArrayList<Media> medias = new ArrayList<>(); // 本相册下所有的媒体
 
     private boolean selected = false;
 
-    private ArrayList<Media> selectedMedias = new ArrayList<>();
+    private ArrayList<Media> selectedMedias = new ArrayList<>();  // 本相册下被选中的媒体
 
     public Album() {}
 
@@ -69,7 +69,6 @@ public class Album {
     public int toggleMediaSelected(int id) {
         Media media = medias.get(id);
         media.setSelected(!media.isSelected());
-
 
         if(media.isSelected()) {
             selectedMedias.add(media);
